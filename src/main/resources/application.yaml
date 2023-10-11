@@ -1,0 +1,15 @@
+spring:
+  mail:
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: 'true'
+          auth: 'true'
+    host: 'smtp.gmail.com'
+    username:  b.t4nsky@gmail.com
+    password: bitjwgaomfsihqvg
+    port: '587'
+user:
+  email:
+    from: b.t4nsky@gmail.com
