@@ -17,7 +17,7 @@ public class EmailServiceTest implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 
-		emailService.sendSimpleMessage("bartot1999@wp.pl", "Spring boot test", "Message sended successfully");
+		emailService.sendSimpleMessage("b.t4nsky@gmail.com", "Spring boot test", "Message sended successfully");
 		
 	}
 
