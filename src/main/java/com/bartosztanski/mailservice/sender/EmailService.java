@@ -1,5 +1,9 @@
 package com.bartosztanski.mailservice.sender;
 
+import java.io.File;
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
@@ -17,4 +21,12 @@ public interface EmailService {
 	public void sendMessageWithTemplate(String to, String subject,
 			SimpleMailMessage template,
 			String pathToAttachment) throws MessagingException, SendFailedException;
+	
+	public void sendMessageUsingThymeleafTemplate(String to, String subject,
+			String htmlTemplatePath, Map<String, Object> templateModel,
+			File attachment) throws MessagingException;
+	
+	public void sendMessageWithHTML(String to, String subject, String htmlBody, File attachment)
+			throws MessagingException;
+	
 }
