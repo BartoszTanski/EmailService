@@ -11,6 +11,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -28,12 +30,14 @@ public class EmailServiceTest implements CommandLineRunner{
 		this.emailService = emailService;
 	}
 	
+	@Value("${spring.mail.templates.path}")
+    private String mailTemplatesPath;
 	
 	@Override
 	public void run(String... args) throws Exception {
 
 		//emailService.sendSimpleMessage("b.t4nsky@gmail.com", "Spring boot test", "Message sended successfully");
-		
+		/*
 		Path filePath = new File(getClass().getResource("/test.html").getFile()).toPath(); 
 
         Charset charset = StandardCharsets.UTF_8;
@@ -54,7 +58,14 @@ public class EmailServiceTest implements CommandLineRunner{
         
 		emailService.sendMessageWithHTML("b.t4nsky@gmail.com", "Spring boot test",
 				stringBuilder.toString(),file);
-		
+		*/
+		Map<String, Object> emailAtributes  = new HashMap<>();
+		emailAtributes.put("recipientName", "recipientName attribute");
+		emailAtributes.put("text", "text attribute");
+		emailAtributes.put("senderName", "senderName attribute");
+
+		emailService.sendMessageUsingThymeleafTemplate("b.t4nsky@gmail.com",
+				"Thymeleaf template test", "template-thymeleaf.html", emailAtributes, null);
 	}
 
 }

@@ -2,6 +2,7 @@ package com.bartosztanski.mailservice.sender;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -18,6 +19,10 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
+
+import com.bartosztanski.mailservice.model.SimpleMailRequest;
+import com.bartosztanski.mailservice.model.TemplateMailRequest;
+import com.bartosztanski.mailservice.model.TemplateModel;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -114,7 +119,7 @@ public class EmailServiceImpl implements EmailService {
 
 	@Override
 	public void sendMessageUsingThymeleafTemplate(String to, String subject,
-			String htmlTemplatePath, Map<String, Object> templateModel,
+			String htmlTemplatePath, TemplateModel templateModel,
 			File attachment) throws MessagingException {
 		
 		MimeMessage message = emailSender.createMimeMessage();
@@ -122,14 +127,14 @@ public class EmailServiceImpl implements EmailService {
 	    MimeMessageHelper helper = new MimeMessageHelper(message, true);
 	    
 	    Context thymeleafContext = new Context();
-	    thymeleafContext.setVariables(templateModel);
-	    String htmlBody = thymeleafTemplateEngine.process("template-thymeleaf.html", thymeleafContext);
-	    
+	    thymeleafContext.setVariables(templateModel.getVariables());
+	    String htmlBody = thymeleafTemplateEngine.process(templateModel.getTemplate(), thymeleafContext);
+	    //"template-thymeleaf.html"
 	    helper.setFrom(NOREPLY_ADDRESS);
 	    helper.setTo(to);
 	    helper.setSubject(subject);
 	    helper.setText(htmlBody,true);
-	    
+	    System.out.println(htmlBody);
 	       if (attachment!=null) helper.addAttachment("Invoice", attachment);
 
 	    emailSender.send(message);
@@ -154,6 +159,36 @@ public class EmailServiceImpl implements EmailService {
 		    helper.addAttachment(attachment.getName(), attachment);
 	    }
 	    emailSender.send(message);
+		
+	}
+
+	@Override
+	public void sendSimpleMessage(SimpleMailRequest simpleMailRequest) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<String> getAllTemplates() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void sendMessageWithHTML(SimpleMailRequest simpleMailRequest) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void sendMessageWithTemplate(TemplateMailRequest templateMailRequest) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void sendMessageUsingThymeleafTemplate(String to, String subject, String htmlTemplatePath,
+			Map<String, Object> templateModel, File attachment) throws MessagingException {
+		// TODO Auto-generated method stub
 		
 	}
 	
