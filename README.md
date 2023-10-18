@@ -24,7 +24,7 @@ Enables using predefined mail templates (thymeleaf templates) and sending attach
 }
 ```
 ### Example of email sent
-![Sent email](screenshots/screenshot-mail.PNG)
+![Sent email](screenshots/screenshot-mail.png)
 
 - Method: GET
 - Endpoint: http://localhost:8080/templates
